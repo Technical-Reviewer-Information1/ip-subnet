@@ -8,7 +8,7 @@ import struct
 
 # ページ設定
 st.set_page_config(
-    page_title="IPアドレス・サブネット学習アプリ",
+    page_title="IPアドレス",
     page_icon="🌐",
     layout="wide"
 )
@@ -104,8 +104,10 @@ def generate_random_ipv6() -> str:
     return ':'.join(parts)
 
 def main():
-    st.title("🌐 IPアドレス・サブネット学習アプリ")
-    st.markdown("高校生向け：IPアドレスとサブネットマスクを体験的に学ぼう！")
+    st.title("IPアドレス（pp.108-111）")
+    st.caption("Created by Dit-Lab.(Daiki Ito)")
+    st.caption("Supported by Tomoaki ATSUMI")
+    st.markdown("IPアドレスとサブネットマスクを体験的に学ぼう！")
     
     # メイン画面でセクション選択
     section = st.selectbox(
