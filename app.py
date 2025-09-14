@@ -107,8 +107,8 @@ def main():
     st.title("🌐 IPアドレス・サブネット学習アプリ")
     st.markdown("高校生向け：IPアドレスとサブネットマスクを体験的に学ぼう！")
     
-    # サイドバーでセクション選択
-    section = st.sidebar.selectbox(
+    # メイン画面でセクション選択
+    section = st.selectbox(
         "学習セクションを選択",
         ["📚 基本概念", "🔧 IPv4 実践", "🔢 2進数・ホスト部分析", "🔬 IPv6 探索", "🎯 練習問題", "🏠 身近な例"]
     )
@@ -662,8 +662,8 @@ def practice_quiz():
     # スコア表示
     if st.session_state.quiz_total > 0:
         accuracy = (st.session_state.quiz_score / st.session_state.quiz_total) * 100
-        st.sidebar.metric("正答率", f"{accuracy:.1f}%", 
-                         f"{st.session_state.quiz_score}/{st.session_state.quiz_total}")
+        st.metric("正答率", f"{accuracy:.1f}%",
+                 f"{st.session_state.quiz_score}/{st.session_state.quiz_total}")
 
 def number_conversion_quiz():
     st.subheader("🔢 数値変換クイズ")
