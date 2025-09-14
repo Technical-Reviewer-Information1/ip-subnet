@@ -109,23 +109,20 @@ def main():
     st.caption("Supported by Tomoaki ATSUMI")
     st.markdown("IPアドレスとサブネットマスクを体験的に学ぼう！")
     
-    # メイン画面でセクション選択
-    section = st.selectbox(
-        "学習セクションを選択",
-        ["📚 基本概念", "🔧 IPv4 実践", "🔢 2進数・ホスト部分析", "🔬 IPv6 探索", "🎯 練習問題", "🏠 身近な例"]
-    )
-    
-    if section == "📚 基本概念":
+    # タブでセクション選択
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["📚 基本概念", "🔧 IPv4 実践", "🔢 2進数・ホスト部分析", "🔬 IPv6 探索", "🎯 練習問題", "🏠 身近な例"])
+
+    with tab1:
         basic_concepts()
-    elif section == "🔧 IPv4 実践":
+    with tab2:
         ipv4_practice()
-    elif section == "🔢 2進数・ホスト部分析":
+    with tab3:
         binary_host_analysis()
-    elif section == "🔬 IPv6 探索":
+    with tab4:
         ipv6_exploration()
-    elif section == "🎯 練習問題":
+    with tab5:
         practice_quiz()
-    elif section == "🏠 身近な例":
+    with tab6:
         real_world_examples()
 
 def basic_concepts():
