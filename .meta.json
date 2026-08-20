@@ -4,7 +4,7 @@
  "pp": "pp.108-111",
  "lead": "IPアドレスは32個のスイッチの並びです。ビットを直接さわりながら、ネットワーク部とホスト部の境目を見つけましょう。",
  "scripts": [
-  "chart.js",
+  "tools.js",
   "terms.js",
   "quiz.js",
   "app.js"
