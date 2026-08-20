@@ -1,0 +1,123 @@
+  <section class="step" id="step1">
+    <h2><span class="no">STEP 1</span>32個のスイッチとして見る</h2>
+    <p class="desc"><span class="term" data-t="IPアドレス">IPアドレス</span>（<span class="term" data-t="IPv4">IPv4</span>）は32ビット。<strong>8ビットずつ4つに区切って10進法</strong>で書きます。ビットをクリックして0と1を切りかえてみましょう。</p>
+
+    <div class="panel">
+      <div class="octets" id="octs"></div>
+      <div class="ipline" id="ipLine" style="margin-top:14px"></div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn sm" data-ip="10101100.00010000.11101110.01111010">本文の例</button>
+        <button class="btn sm" data-ip="11000000.10101000.00000010.00000000">192.168.2.0</button>
+        <button class="btn sm" data-ip="11000000.10101000.00111001.01111011">192.168.57.123</button>
+        <button class="btn sm ghost" id="randIp">でたらめに作る</button>
+      </div>
+      <div class="note info" style="margin-top:12px">
+        1つの区切り（オクテット）は8ビット。上の位から <span class="mono">128・64・32・16・8・4・2・1</span> の重みをもち、
+        1になっているところを足すと10進法の値になります。<strong>最大は 255</strong>（すべて1のとき）。
+      </div>
+      <div class="metrics" style="margin-top:12px">
+        <div class="metric"><div class="k">IPv4 で使えるアドレスの数</div><div class="v">2<sup>32</sup></div><div class="s">約43億通り</div></div>
+        <div class="metric"><div class="k"><span class="term" data-t="IPv6">IPv6</span>（128ビット）</div><div class="v">2<sup>128</sup></div><div class="s">IPv4 の 2<sup>96</sup> 倍</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <h2><span class="no">STEP 2</span>ネットワーク部とホスト部</h2>
+    <p class="desc"><span class="term" data-t="サブネットマスク">サブネットマスク</span>の<strong>1が並んでいるところまでがネットワーク部</strong>、残りが<span class="term" data-t="ホスト部">ホスト部</span>です。</p>
+
+    <div class="panel">
+      <label class="fld" for="prefix">サブネットマスク：<span class="mono" id="maskText"></span>（/<span class="mono" id="prefixV">24</span>）</label>
+      <input type="range" id="prefix" min="8" max="30" step="1" value="24">
+      <div class="maskbar" id="maskBar"></div>
+
+      <div style="margin-top:14px">
+        <div class="binrow" id="binIp"></div>
+        <div class="binrow" id="binMask"></div>
+      </div>
+
+      <div class="metrics" style="margin-top:14px">
+        <div class="metric"><div class="k">ネットワーク部</div><div class="v" id="mNet">—</div><div class="s">ビット</div></div>
+        <div class="metric"><div class="k">ホスト部</div><div class="v" id="mHost">—</div><div class="s">ビット</div></div>
+        <div class="metric"><div class="k">理論上のアドレス数</div><div class="v" id="mTheory">—</div><div class="s">2のホスト部乗</div></div>
+        <div class="metric"><div class="k">実際に使える台数</div><div class="v" id="mUsable">—</div><div class="s">2を引く</div></div>
+      </div>
+      <div class="note" id="maskNote" style="margin-top:12px"></div>
+
+      <div class="grid c2" style="margin-top:14px">
+        <div class="metric" style="border:1px solid var(--rule);padding:12px">
+          <div class="k"><span class="term" data-t="ネットワークアドレス">ネットワークアドレス</span>（ホスト部がすべて0）</div>
+          <div class="v" id="mNetAddr" style="font-size:1.1rem">—</div>
+        </div>
+        <div class="metric" style="border:1px solid var(--rule);padding:12px">
+          <div class="k"><span class="term" data-t="ブロードキャストアドレス">ブロードキャストアドレス</span>（ホスト部がすべて1）</div>
+          <div class="v" id="mBcast" style="font-size:1.1rem">—</div>
+        </div>
+      </div>
+      <p class="why" style="margin-top:10px">この2つは端末に割り当てられないので、<strong>理論上の数から2を引いた数</strong>が実際に接続できる台数になります。</p>
+    </div>
+  </section>
+
+  <section class="step" id="step3">
+    <h2><span class="no">STEP 3</span>同じネットワークかを判定する</h2>
+    <p class="desc">2つのIPアドレスの<strong>ネットワーク部が同じなら直接通信できます</strong>。ちがえばルータを通す必要があります。</p>
+    <div class="panel">
+      <div class="grid c2">
+        <div>
+          <label class="fld" for="ipA">IPアドレス A</label>
+          <input type="text" id="ipA" class="mono" value="192.168.57.123">
+          <label class="fld" style="margin-top:10px" for="ipB">IPアドレス B</label>
+          <input type="text" id="ipB" class="mono" value="192.168.55.50">
+          <label class="fld" style="margin-top:10px" for="maskIn">サブネットマスク</label>
+          <input type="text" id="maskIn" class="mono" value="255.255.252.0">
+          <div class="btn-row" style="margin-top:10px">
+            <button class="btn primary" id="judge">判定する</button>
+            <button class="btn sm" data-pair="192.168.57.123|192.168.55.50">本文の⓪</button>
+            <button class="btn sm" data-pair="192.168.57.123|192.168.56.123">①</button>
+            <button class="btn sm" data-pair="192.168.57.123|192.168.57.50">②</button>
+            <button class="btn sm" data-pair="192.168.57.123|192.168.57.254">③</button>
+          </div>
+        </div>
+        <div>
+          <div class="cmp-ip"><h4>A の2進法表示</h4><div class="binrow" id="binA"></div></div>
+          <div class="cmp-ip"><h4>B の2進法表示</h4><div class="binrow" id="binB"></div></div>
+          <div class="cmp-ip"><h4>サブネットマスク</h4><div class="binrow" id="binM"></div></div>
+        </div>
+      </div>
+      <div class="note" id="judgeNote" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step4">
+    <h2><span class="no">STEP 4</span>確認クイズ</h2>
+    <div class="panel">
+      <div class="qhead">
+        <span class="badge" id="qProgress">1 / 1</span>
+        <span class="badge">正解 <span class="score" id="qScore">0</span></span>
+      </div>
+      <div class="card-q"><div class="q-scene" id="qText"></div></div>
+      <div class="choice4" id="qChoices"></div>
+      <div class="note" id="qFb" hidden style="margin-top:12px"></div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn primary" id="qNext" disabled>次の問題</button>
+        <button class="btn ghost" id="qReset">最初から</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="glossary">
+    <h2><span class="no">用語</span>この節で出てくることば</h2>
+    <div id="glossBox"></div>
+  </section>
+
+  <section class="step">
+    <h2><span class="no">まとめ</span>IPアドレスのポイント</h2>
+    <ul style="margin:0;padding-left:1.2em;color:var(--ink-2);font-size:.92rem;line-height:2.05">
+      <li>IPv4は<strong>32ビット</strong>で 2<sup>32</sup> 通り。8ビットずつ区切って10進法で表す（各区切りは0〜255）。</li>
+      <li>IPv6は<strong>128ビット</strong>で、IPv4の 2<sup>96</sup> 倍。<strong>機器の増加</strong>に対応するために導入された。</li>
+      <li>インターネットに直接つながる機器には<strong>グローバルIPアドレス</strong>が割り当てられる。</li>
+      <li>サブネットマスクの<strong>1の部分がネットワーク部</strong>、0の部分がホスト部。</li>
+      <li>接続できる台数 ＝ <span class="mono">2<sup>ホスト部のビット数</sup> − 2</span>（ネットワークアドレスとブロードキャストアドレスの分）。</li>
+      <li>ネットワーク部が同じなら<strong>直接通信できる</strong>。ちがえばルータが必要。</li>
+    </ul>
+  </section>
