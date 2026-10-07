@@ -219,5 +219,19 @@
     drawBook();
     window.Terms.attach();
   }
+  if (window.Predict) Predict.make('pdI', {
+    q: 'サブネットマスクを <span class="mono">255.255.255.0</span>（254台）から <span class="mono">255.255.252.0</span> に変えると、つなげる端末の数はどうなるでしょう？',
+    type: 'pick',
+    ch: ['4分の1に減る', 'ほとんど変わらない', '約4倍に増える', '2倍に増える'],
+    answer: function () { return 2; },
+    show: function () {
+      return '<span class="mono">252 ＝ 11111100<sub>(2)</sub></span> なので「1」は22ビット分。ホスト部は<strong>10ビット</strong>になります。' +
+             '<span class="mono">2<sup>10</sup> − 2 ＝ 1022台</span>で、254台の<strong>約4倍</strong>です。';
+    },
+    why: '「252は255より小さいから減りそう」と思いがちですが、逆です。' +
+         'マスクの「1」が<strong>減る</strong>ほどネットワーク部がせまくなり、残りの<strong>ホスト部が広がる</strong>ので、つなげる台数は増えます。' +
+         'マスクは「どこまでが同じネットワークか」の境目を決めているだけです。'
+  });
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
