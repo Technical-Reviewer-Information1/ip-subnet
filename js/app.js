@@ -59,8 +59,11 @@
     const mb = prefixBits(p);
     $('maskText').textContent = ipStr(mb);
     const hostBits = 32 - p;
-    $('maskBar').innerHTML = '<span class="net" style="width:' + (p / 32 * 100) + '%">ネットワーク部 ' + p + 'ビット</span>' +
-      '<span class="host" style="width:' + (hostBits / 32 * 100) + '%">ホスト部 ' + hostBits + '</span>';
+    const mbar = $('maskBar');
+    if (!mbar.querySelector('.net')) mbar.innerHTML = '<span class="net"></span><span class="host"></span>';
+    const nEl = mbar.querySelector('.net'), hEl = mbar.querySelector('.host');
+    nEl.style.width = (p / 32 * 100) + '%'; nEl.textContent = 'ネットワーク部 ' + p + 'ビット';
+    hEl.style.width = (hostBits / 32 * 100) + '%'; hEl.textContent = 'ホスト部 ' + hostBits + 'ビット';
     $('binIp').innerHTML = 'IP　　　 ' + colorBin(bits, p);
     $('binMask').innerHTML = 'マスク　 ' + colorBin(mb, p);
     const theory = Math.pow(2, hostBits);

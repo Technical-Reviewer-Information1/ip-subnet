@@ -40,3 +40,6 @@ table.tbl td .blankin{width:100%; max-width:none}
 .binrow .hp{background:#e6f3ea; padding:1px 0}
 .cmp-ip{border:1px solid var(--rule); background:var(--paper); padding:12px; margin-bottom:10px}
 .cmp-ip h4{font-size:.84rem; margin-bottom:6px; color:var(--ink-2)}
+
+/* サブネットマスクのバーをなめらかに */
+.maskbar .net,.maskbar .host{transition:width .45s cubic-bezier(.45,.05,.35,1)}
